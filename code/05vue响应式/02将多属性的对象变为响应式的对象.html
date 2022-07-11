@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02defineProperty的进阶使用</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script>
+        // 模拟 vue 的data
+        let data = {
+            name:'vae',
+            age:18,
+            address:'北京'
+        }
+        // 模拟 vue 实例
+        let vm = {};
+        // 将对象的多属性变成响应式的
+        function proxyDataFun(data){
+            Object.keys(data).forEach(key=>{
+                Object.defineProperty(vm,key,{
+                    enumerable:true, // 可枚举
+                    configurable: true, // 可配置
+                    get(){
+                        return data[key]
+                    },
+                    set(newVal){
+                        if(newVal == data[key]) return
+                        data[key] = newVal
+                        document.querySelector('#app').textContent = data[key]
+                    }
+                })
+            })
+        }
+        proxyDataFun(data)
+    </script>
+</body>
+</html>
