@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>观察者模式</title>
+</head>
+<body>
+    <script>
+        class Subject{
+            constructor(){
+               this.obsList = []; 
+            }
+            addObs(obs){
+                if(obs && obs.update){
+                    this.obsList.push(obs)
+                }
+            }
+            notify(){
+                this.obsList.forEach(obs=>{
+                    obs.update();
+                })
+            }
+            empty(){
+                this.obsList = [];
+            }
+        }
+        class Obersveral{
+            update(){
+                console.log('有新文章了~~~');
+            }
+        }
+
+        let sub = new Subject();
+        let obs = new Obersveral()
+        let obs2 = new Obersveral()
+        sub.addObs(obs)
+        sub.addObs(obs2)
+        sub.notify();
+    </script>
+</body>
+</html>
